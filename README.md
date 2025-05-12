@@ -2,15 +2,20 @@
 
 Projeto de console em C# que simula uma **agenda de compromissos com gerenciamento de:
 -Usuários 
+
 -Participantes
+
 -Locais
+
 -Anotações
 
 ## Objetivo
 
 Aplicar os principios de **Programação Orientada a Objetos** como:
 -Abstração 
+
 -Encapsulamento 
+
 -Associação Simples N:N e Composição
 
 ## Funcionalidades 
