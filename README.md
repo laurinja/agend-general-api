@@ -30,7 +30,8 @@ Aplicar os principios de **Programação Orientada a Objetos** como:
 ## Estrutura do Projeto
 
 /AGEND-GENERAL-API/
-  |-Modelos/
+
+   |-Modelos/
   
  Anotação.cs
  
@@ -42,9 +43,9 @@ Aplicar os principios de **Programação Orientada a Objetos** como:
  
  Usuario.cs
  
-  |-Program.cs
+   |-Program.cs
   
-  |-README.md
+   |-README.md
 
 ## Conceitos Aplicados
 -**Associação Simples**: 'Compromisso' contén referencia a usuário e 'Local'
