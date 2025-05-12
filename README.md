@@ -75,4 +75,4 @@ Aplicar os principios de **Programação Orientada a Objetos** como:
 
 Laura Kauana Bareto
 
-**email**: laura.bareto@alunos.utfpr.edu.br
+**email**: laurabareto@alunos.utfpr.edu.br
