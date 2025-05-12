@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj": {}
+    "C:\\Users\\victo\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj": {
+    "C:\\Users\\victo\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj",
+        "projectUniqueName": "C:\\Users\\victo\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj",
         "projectName": "AgendaCompromisso",
-        "projectPath": "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj",
-        "packagesPath": "C:\\Users\\Dell G3\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\obj\\",
+        "projectPath": "C:\\Users\\victo\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj",
+        "packagesPath": "C:\\Users\\victo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\victo\\Documents\\GitHub\\agend-general-api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dell G3\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\victo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"

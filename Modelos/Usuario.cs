@@ -21,7 +21,7 @@ namespace AgendaDeCompromissos.AgendaCompromisso
         public void AdicionarCompromisso(Compromisso compromisso)
         {
             if (compromisso == null)
-                throw new ArgumentNullException(nameof(compromisso));
+                throw new ArgumentNullException(nameof(compromisso),"Compromisso não pode ser nulo.");
 
             if (!_compromissos.Contains(compromisso))
                 _compromissos.Add(compromisso);

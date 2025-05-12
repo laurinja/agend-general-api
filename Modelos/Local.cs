@@ -16,7 +16,7 @@ namespace AgendaDeCompromissos.AgendaCompromisso
                 throw new ArgumentException("Capacidade deve ser maior que zero.");
 
             Nome = nome;
-            Capacidade = capacidade;
+            CapacidadeMaxima = capacidade;
         }
 
         public void ValidarCapacidade(int quantidade)

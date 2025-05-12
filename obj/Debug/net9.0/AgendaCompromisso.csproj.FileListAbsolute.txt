@@ -1,0 +1,15 @@
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.AssemblyInfoInputs.cache
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.AssemblyInfo.cs
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.csproj.CoreCompileInputs.cache
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.sourcelink.json
+C:\Users\victo\Documents\GitHub\agend-general-api\bin\Debug\net9.0\AgendaCompromisso.exe
+C:\Users\victo\Documents\GitHub\agend-general-api\bin\Debug\net9.0\AgendaCompromisso.deps.json
+C:\Users\victo\Documents\GitHub\agend-general-api\bin\Debug\net9.0\AgendaCompromisso.runtimeconfig.json
+C:\Users\victo\Documents\GitHub\agend-general-api\bin\Debug\net9.0\AgendaCompromisso.dll
+C:\Users\victo\Documents\GitHub\agend-general-api\bin\Debug\net9.0\AgendaCompromisso.pdb
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.dll
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\refint\AgendaCompromisso.dll
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.pdb
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\AgendaCompromisso.genruntimeconfig.cache
+C:\Users\victo\Documents\GitHub\agend-general-api\obj\Debug\net9.0\ref\AgendaCompromisso.dll
