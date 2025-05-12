@@ -16,10 +16,15 @@ Aplicar os principios de **Programação Orientada a Objetos** como:
 ## Funcionalidades 
 
 -Cadastro do usuário
+
 -Registro de compromissos com data, hora, local e descrição
+
 -validação de capacidade de local
+
 -Associação de múltiplos participantes a um compromisso
+
 -Criação de anotações internas em cada compromisso
+
 -Listagem de compromisso com todos os detalhes
 
 ## Estrutura do Projeto
