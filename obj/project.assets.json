@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dell G3\\AgendaCompromisso\\AgendaCompromisso.csproj",
+      "projectUniqueName": "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj",
       "projectName": "AgendaCompromisso",
-      "projectPath": "C:\\Users\\Dell G3\\AgendaCompromisso\\AgendaCompromisso.csproj",
+      "projectPath": "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\AgendaCompromisso.csproj",
       "packagesPath": "C:\\Users\\Dell G3\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dell G3\\AgendaCompromisso\\obj\\",
+      "outputPath": "C:\\Users\\Dell G3\\Documents\\GitHub\\agend-general-api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Dell G3\\AppData\\Roaming\\NuGet\\NuGet.Config"
