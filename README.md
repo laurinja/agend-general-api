@@ -41,14 +41,19 @@ Aplicar os principios de **Programação Orientada a Objetos** como:
 
 ## Conceitos Aplicados
 -**Associação Simples**: 'Compromisso' contén referencia a usuário e 'Local'
+
 -**Associação N:N**: 'Compromisso' e 'participante' se referenciam mutualmente
+
 -**Composição**: 'Compromisso' possui lista de 'Anotação', criada internamente
+
 -**Encapsulamento**:coleções internas são protegidas com 'IReadOnlyCollection<T>'.
 
 ## Validações Importantes
 
 -Data/hora dos compromissos devem ser futuras.
+
 -Descrição é obrigatória.
+
 -Número de participantes não pode ultrapassar a capacidade do local.
 
 ## Autora
