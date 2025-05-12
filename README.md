@@ -1,6 +1,7 @@
 # Sistema de Agenda de Compromissos
 
-Projeto de console em C# que simula uma **agenda de compromissos com gerenciamento de:
+Projeto de console em C# que simula uma **agenda de compromissos** com gerenciamento de:
+
 -Usuários 
 
 -Participantes
@@ -12,6 +13,7 @@ Projeto de console em C# que simula uma **agenda de compromissos com gerenciamen
 ## Objetivo
 
 Aplicar os principios de **Programação Orientada a Objetos** como:
+
 -Abstração 
 
 -Encapsulamento 
