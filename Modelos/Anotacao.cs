@@ -7,7 +7,7 @@ namespace AgendaDeCompromissos.AgendaCompromisso
         public string Texto { get; private set; }
         public DateTime DataCriacao { get; private set; }
 
-        public Anotacao(string texto)
+        internal Anotacao(string texto)
         {
             if (string.IsNullOrWhiteSpace(texto))
                 throw new ArgumentException("Texto da anotação é obrigatório.");
