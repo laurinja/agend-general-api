@@ -10,6 +10,9 @@ Projeto de console em C# que simula uma **agenda de compromissos** com gerenciam
 
 -Anotações
 
+
+A aplicação trabalha com persistência dos dados em arquivos JSON, garantindo que as informações sejam salvas entre execuções.
+
 ## Objetivo
 
 Aplicar os principios de **Programação Orientada a Objetos** como:
@@ -34,34 +37,45 @@ Aplicar os principios de **Programação Orientada a Objetos** como:
 
 -Listagem de compromisso com todos os detalhes
 
+-Persistência automática dos dados em JSON
+
+-Interface Console ou CLI
+
+
+
 ## Estrutura do Projeto
 
 /AGEND-GENERAL-API/
+├── Modelos/
+│   ├── Anotacao.cs
+│   ├── Compromisso.cs
+│   ├── Local.cs
+│   ├── Participante.cs
+│   └── Usuario.cs
+├── Persistencia/
+│   └── RepositorioCompromissos.cs
+├── Program.cs
+└── README.md
 
-   |-Modelos/
-  
- Anotação.cs
- 
- Compromisso.cs
- 
- Local.cs
- 
- Participante.cs
- 
- Usuario.cs
- 
-   |-Program.cs
-  
-   |-README.md
+## Persistência dos Dados
+-Os dados são armazenados em arquivos JSON.
+
+-Estratégia utilizada: modelo hierárquico, onde:
+
+-Cada compromisso contém seus participantes, local e anotações embutidos no mesmo arquivo.
+
+-Arquivo principal de persistência:
+compromissos.json
 
 ## Conceitos Aplicados
--**Associação Simples**: 'Compromisso' contén referencia a usuário e 'Local'
+-**Associação Simples**: Compromisso possui referência ao Usuario e ao Local.
 
--**Associação N:N**: 'Compromisso' e 'participante' se referenciam mutualmente
+-**Associação N:N**: Compromisso e Participante possuem referências mútuas.
 
--**Composição**: 'Compromisso' possui lista de 'Anotação', criada internamente
 
--**Encapsulamento**:coleções internas são protegidas com 'IReadOnlyCollection<T>'.
+-**Composição**: Compromisso possui uma lista de Anotacao criada internamente (anotações não existem sem um compromisso).
+
+-**Encapsulamento**: As coleções internas são protegidas utilizando IReadOnlyCollection<T>, garantindo que só possam ser manipuladas por métodos controlados da classe.
 
 ## Validações Importantes
 
