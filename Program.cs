@@ -2,14 +2,61 @@
 using System.Runtime.InteropServices;
 using AgendaDeCompromissos;
 using AgendaDeCompromissos.AgendaCompromisso;
+using Newtonsoft.Json;
+using System.IO;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
 
 CultureInfo culturaBrasileira = new("pt-BR");
 
 Console.WriteLine("Sistema de Agendas de Compromissos");
 
+const string arquivoUsuarios = "usuarios.json";
+List<Usuario> usuarios = new List<Usuario>();
+
+if (File.Exists(arquivoUsuarios))
+{
+    string json = File.ReadAllText(arquivoUsuarios);
+    usuarios = JsonConvert.DeserializeObject<List<Usuario>>(json) ?? new List<Usuario>();
+}
+
 Console.Write("Insira o nome completo: ");
-string nomeCompleto = Console.ReadLine();
-Usuario usuario = new (nomeCompleto);
+string nomeCompleto = Console.ReadLine()?.Trim();
+
+string Normalizar(string texto) =>
+    new string(texto.Normalize(System.Text.NormalizationForm.FormD)
+        .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+        .ToArray())
+    .ToLowerInvariant()
+    .Trim();
+
+string nomeNormalizado = Normalizar(nomeCompleto);
+
+Usuario usuario = usuarios.FirstOrDefault(u => Normalizar(u.NomeCompleto) == nomeNormalizado);
+
+if (usuario == null)
+{
+    usuario = new Usuario(nomeCompleto);
+    usuarios.Add(usuario);
+    Console.WriteLine($"Usuário {usuario.NomeCompleto} criado!");
+    SalvarUsuarios(usuarios);
+}
+else
+{
+    Console.WriteLine($"Bem-vindo de volta, {usuario.NomeCompleto}!");
+}
+
+void SalvarUsuarios(List<Usuario> usuarios)
+{
+    var settings = new JsonSerializerSettings
+    {
+        Formatting = Formatting.Indented,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
+    string json = JsonConvert.SerializeObject(usuarios, settings);
+    File.WriteAllText(arquivoUsuarios, json);
+}
 
 while(true)
 {
@@ -22,7 +69,7 @@ while(true)
     switch(opcao)
     {
         case "1":
-            RegistrarCompromisso(usuario);
+            RegistrarCompromisso(usuario, usuarios, SalvarUsuarios);
             break;
         case "2":
             ListarCompromissos(usuario);
@@ -36,7 +83,7 @@ while(true)
     }
 }
 
-static void RegistrarCompromisso(Usuario usuario)
+static void RegistrarCompromisso(Usuario usuario, List<Usuario> usuarios, Action<List<Usuario>> salvarUsuarios)
 {
     DateTime? data = null;
     TimeSpan? hora = null;
@@ -151,6 +198,7 @@ static void RegistrarCompromisso(Usuario usuario)
             }
 
             usuario.AdicionarCompromisso(compromisso);
+            salvarUsuarios(usuarios);
             Console.WriteLine("\nCompromisso registrado com sucesso.");
         }
         catch(Exception excecao)

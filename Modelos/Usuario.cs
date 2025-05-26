@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace AgendaDeCompromissos.AgendaCompromisso
 {
@@ -9,6 +10,14 @@ namespace AgendaDeCompromissos.AgendaCompromisso
 
         private List<Compromisso> _compromissos = new List<Compromisso>();
         public IReadOnlyCollection<Compromisso> Compromissos => _compromissos.AsReadOnly();
+
+        [JsonConstructor]
+        private Usuario(string nomeCompleto, List<Compromisso> compromissos = null)
+        {
+            NomeCompleto = nomeCompleto;
+            if (compromissos != null)
+                _compromissos = compromissos;
+        }
 
         public Usuario(string nomeCompleto)
         {

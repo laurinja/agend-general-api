@@ -1,20 +1,34 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace AgendaDeCompromissos.AgendaCompromisso
 {
     public class Compromisso
     {
-        public DateTime DataHora { get; private set; }
-        public string Descricao { get; private set; }
-        public Usuario Responsavel { get; private set; }
-        public Local Local { get; private set; }
+        public DateTime DataHora { get; set; }
+        public string Descricao { get; set; }
+        public Usuario Responsavel { get; set; }
+        public Local Local { get; set; }
 
-        private List<Participante> _participantes = new List<Participante>();
+        public List<Participante> _participantes = new List<Participante>();
         public IReadOnlyCollection<Participante> Participantes => _participantes.AsReadOnly();
 
-        private List<Anotacao> _anotacoes = new List<Anotacao>();
+        public List<Anotacao> _anotacoes = new List<Anotacao>();
         public IReadOnlyCollection<Anotacao> Anotacoes => _anotacoes.AsReadOnly();
+
+        [JsonConstructor]
+        private Compromisso(DateTime dataHora, string descricao, Usuario responsavel, Local local, List<Participante> participantes = null, List<Anotacao> anotacoes = null)
+        {
+            DataHora = dataHora;
+            Descricao = descricao;
+            Responsavel = responsavel;
+            Local = local;
+            if (participantes != null)
+                _participantes = participantes;
+            if (anotacoes != null)
+                _anotacoes = anotacoes;
+        }
 
         public Compromisso(DateTime dataHora, string descricao, Usuario responsavel, Local local)
         {

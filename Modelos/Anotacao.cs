@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace AgendaDeCompromissos.AgendaCompromisso
 {
@@ -6,6 +7,13 @@ namespace AgendaDeCompromissos.AgendaCompromisso
     {
         public string Texto { get; private set; }
         public DateTime DataCriacao { get; private set; }
+
+        [JsonConstructor]
+        private Anotacao(string texto, DateTime dataCriacao)
+        {
+            Texto = texto;
+            DataCriacao = dataCriacao;
+        }
 
         internal Anotacao(string texto)
         {

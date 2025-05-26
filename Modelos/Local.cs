@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace AgendaDeCompromissos.AgendaCompromisso
 {
@@ -7,16 +8,23 @@ namespace AgendaDeCompromissos.AgendaCompromisso
         public string Nome { get; private set; }
         public int CapacidadeMaxima { get; private set; }
 
-        public Local(string nome, int capacidade)
+        [JsonConstructor]
+        private Local(string nome, int capacidadeMaxima)
+        {
+            Nome = nome;
+            CapacidadeMaxima = capacidadeMaxima;
+        }
+
+        public Local(string nome, int capacidadeMaxima, bool validar = true)
         {
             if (string.IsNullOrWhiteSpace(nome))
                 throw new ArgumentException("Nome do local é obrigatório.");
 
-            if (capacidade <= 0)
+            if (capacidadeMaxima <= 0)
                 throw new ArgumentException("Capacidade deve ser maior que zero.");
 
             Nome = nome;
-            CapacidadeMaxima = capacidade;
+            CapacidadeMaxima = capacidadeMaxima;
         }
 
         public void ValidarCapacidade(int quantidade)
