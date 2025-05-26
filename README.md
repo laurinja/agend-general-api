@@ -129,12 +129,12 @@ Escolha uma opção do menu:
 
 ##  Autores
 
-**Laura Kauana Bareto**  
+**Laura Kauana Bareto**   
 email: laurabareto@alunos.utfpr.edu.br
 
-**Victor Luiz de Oliveira Paes**
+**Victor Luiz de Oliveira Paes**   
 email: victorpaes@alunos.utfpr.edu.br
 
-**Guilherme Campos Feuser**
+**Guilherme Campos Feuser**   
 email:guilhermefeuser@alunos.utfpr.edu.br
 
