@@ -62,16 +62,16 @@ Aplicar os princípios de **Programação Orientada a Objetos (POO)**, como:
 ##  Conceitos Aplicados
 
 - **Associação Simples:**  
-  → Cada `Compromisso` possui um `Usuario` (criador) e um `Local`.
+   Cada `Compromisso` possui um `Usuario` (criador) e um `Local`.
 
 - **Associação N:N:**  
-  → `Compromisso` e `Participante` possuem relação bidirecional (um participante pode estar em vários compromissos e vice-versa).
+   `Compromisso` e `Participante` possuem relação bidirecional (um participante pode estar em vários compromissos e vice-versa).
 
 - **Composição:**  
-  → `Compromisso` contém uma lista de `Anotacao` (anotações internas que não existem fora do compromisso).
+  `Compromisso` contém uma lista de `Anotacao` (anotações internas que não existem fora do compromisso).
 
 - **Encapsulamento:**  
-  → As coleções internas são protegidas, expostas apenas para leitura com `IReadOnlyCollection<T>`.
+   As coleções internas são protegidas, expostas apenas para leitura com `IReadOnlyCollection<T>`.
 
 ---
 
@@ -126,8 +126,8 @@ Escolha uma opção do menu:
 ```
 
 
-##  Autora
+##  Autores
 
-**Laura Kauana Barreto**  
+**Laura Kauana Bareto**  
 email: laurabareto@alunos.utfpr.edu.br  
 
