@@ -116,8 +116,8 @@ dotnet run
 ```plaintext
 Sistema de Agendas de Compromissos
 
-Insira o nome completo: Laura Kauana Barreto
-Bem-vindo de volta, Laura Kauana Barreto!
+Insira o nome completo: Laura Kauana Bareto
+Bem-vindo de volta, Laura Kauana Bareto!
 
 Escolha uma opção do menu:
 1 - Novo compromisso
