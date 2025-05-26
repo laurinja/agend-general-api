@@ -125,9 +125,16 @@ Escolha uma opção do menu:
 3 - Sair
 ```
 
+---
 
 ##  Autores
 
 **Laura Kauana Bareto**  
-email: laurabareto@alunos.utfpr.edu.br  
+email: laurabareto@alunos.utfpr.edu.br
+
+**Victor Luiz de Oliveira Paes**
+email: victorpaes@alunos.utfpr.edu.br
+
+**Guilherme Campos Feuser**
+email:guilhermefeuser@alunos.utfpr.edu.br
 
