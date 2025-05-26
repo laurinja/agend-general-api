@@ -129,5 +129,5 @@ Escolha uma opção do menu:
 ##  Autora
 
 **Laura Kauana Barreto**  
-📧 laurabareto@alunos.utfpr.edu.br  
-🔗 [Repositório GitHub](https://github.com/laurinja)
+email: laurabareto@alunos.utfpr.edu.br  
+
