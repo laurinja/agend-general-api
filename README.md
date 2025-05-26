@@ -1,92 +1,133 @@
-# Sistema de Agenda de Compromissos
 
-Projeto de console em C# que simula uma **agenda de compromissos** com gerenciamento de:
+#  Sistema de Agenda de Compromissos
 
--Usuários 
+Projeto de console em **C#** que simula uma **agenda de compromissos**, com funcionalidades de gerenciamento de:
 
--Participantes
+-  Usuários
+-  Participantes
+-  Locais
+-  Anotações
+-  Compromissos
 
--Locais
+> **Persistência** dos dados em arquivos JSON e interface via **menu no console (CLI interativo)**.
 
--Anotações
+---
 
+##  Objetivo
 
-A aplicação trabalha com persistência dos dados em arquivos JSON, garantindo que as informações sejam salvas entre execuções.
+Aplicar os princípios de **Programação Orientada a Objetos (POO)**, como:
 
-## Objetivo
+-  Abstração
+-  Encapsulamento
+-  Associação simples e N:N
+-  Composição
+-  Validação de dados
+-  Persistência de informações em JSON
 
-Aplicar os principios de **Programação Orientada a Objetos** como:
+---
 
--Abstração 
+##  Funcionalidades
 
--Encapsulamento 
+-  Cadastro de usuários
+-  Registro de compromissos com:
+  - Data, hora, local e descrição
+  - Validação de data/hora no futuro
+  - Verificação da capacidade do local
+-  Associação de múltiplos participantes
+-  Criação de anotações internas para cada compromisso
+-  Listagem completa dos compromissos com todos os detalhes
+-  Salvamento automático dos dados no arquivo `usuarios.json`
 
--Associação Simples N:N e Composição
+---
 
-## Funcionalidades 
+##  Estrutura do Projeto
 
--Cadastro do usuário
-
--Registro de compromissos com data, hora, local e descrição
-
--validação de capacidade de local
-
--Associação de múltiplos participantes a um compromisso
-
--Criação de anotações internas em cada compromisso
-
--Listagem de compromisso com todos os detalhes
-
--Persistência automática dos dados em JSON
-
--Interface Console ou CLI
-
-
-
-## Estrutura do Projeto
-
-/AGEND-GENERAL-API/
+```
+/Agenda-General-Api/
+│
 ├── Modelos/
-│   ├── Anotacao.cs
+│   ├── Usuario.cs
 │   ├── Compromisso.cs
-│   ├── Local.cs
 │   ├── Participante.cs
-│   └── Usuario.cs
-├── Persistencia/
-│   └── RepositorioCompromissos.cs
+│   ├── Anotacao.cs
+│   └── Local.cs
+│
 ├── Program.cs
-└── README.md
+├── usuarios.json (gerado automaticamente)
+├── README.md
+```
 
-## Persistência dos Dados
--Os dados são armazenados em arquivos JSON.
+---
 
--Estratégia utilizada: modelo hierárquico, onde:
+##  Conceitos Aplicados
 
--Cada compromisso contém seus participantes, local e anotações embutidos no mesmo arquivo.
+- **Associação Simples:**  
+  → Cada `Compromisso` possui um `Usuario` (criador) e um `Local`.
 
--Arquivo principal de persistência:
-compromissos.json
+- **Associação N:N:**  
+  → `Compromisso` e `Participante` possuem relação bidirecional (um participante pode estar em vários compromissos e vice-versa).
 
-## Conceitos Aplicados
--**Associação Simples**: Compromisso possui referência ao Usuario e ao Local.
+- **Composição:**  
+  → `Compromisso` contém uma lista de `Anotacao` (anotações internas que não existem fora do compromisso).
 
--**Associação N:N**: Compromisso e Participante possuem referências mútuas.
+- **Encapsulamento:**  
+  → As coleções internas são protegidas, expostas apenas para leitura com `IReadOnlyCollection<T>`.
+
+---
+
+##  Validações Implementadas
+
+-  **Data e hora:** obrigatoriamente no futuro.
+-  **Descrição:** campo obrigatório para todo compromisso.
+-  **Capacidade:** não permite adicionar mais participantes do que a capacidade do local.
+
+---
+
+##  Persistência dos Dados
+
+-  Todos os dados são armazenados em `usuarios.json`.
+-  Salvamento automático após cada operação (criação de usuários ou compromissos).
+-  Leitura dos dados na inicialização.
+
+---
+
+##  Como Executar
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/laurinja/agend-general-api.git
+cd agend-general-api
+```
+
+2. Compile e execute o projeto:
+
+```bash
+dotnet build
+dotnet run
+```
+
+3. Siga as instruções no menu do console.
+
+---
+
+##  Exemplo de Uso
+
+```plaintext
+Sistema de Agendas de Compromissos
+
+Insira o nome completo: Laura Kauana Barreto
+Bem-vindo de volta, Laura Kauana Barreto!
+
+Escolha uma opção do menu:
+1 - Novo compromisso
+2 - Listar compromissos
+3 - Sair
+```
 
 
--**Composição**: Compromisso possui uma lista de Anotacao criada internamente (anotações não existem sem um compromisso).
+##  Autora
 
--**Encapsulamento**: As coleções internas são protegidas utilizando IReadOnlyCollection<T>, garantindo que só possam ser manipuladas por métodos controlados da classe.
-
-## Validações Importantes
-
--Data/hora dos compromissos devem ser futuras.
-
--Descrição é obrigatória.
-
--Número de participantes não pode ultrapassar a capacidade do local.
-
-## Autora
-
-Laura Kauana Bareto
-
-**email**: laurabareto@alunos.utfpr.edu.br
+**Laura Kauana Barreto**  
+📧 laurabareto@alunos.utfpr.edu.br  
+🔗 [Repositório GitHub](https://github.com/laurinja)
