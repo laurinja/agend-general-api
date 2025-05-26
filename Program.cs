@@ -1,64 +1,21 @@
 ﻿using System.Globalization;
-using System.Runtime.InteropServices;
-using AgendaDeCompromissos;
-using AgendaDeCompromissos.AgendaCompromisso;
+using System.Text;
+using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+using AgendaDeCompromissos.AgendaCompromisso;
 
 CultureInfo culturaBrasileira = new("pt-BR");
-
 Console.WriteLine("Sistema de Agendas de Compromissos");
 
 const string arquivoUsuarios = "usuarios.json";
-List<Usuario> usuarios = new List<Usuario>();
+List<Usuario> usuarios = CarregarUsuarios();
 
-if (File.Exists(arquivoUsuarios))
-{
-    string json = File.ReadAllText(arquivoUsuarios);
-    usuarios = JsonConvert.DeserializeObject<List<Usuario>>(json) ?? new List<Usuario>();
-}
+string nomeCompleto = LerEntrada("Insira o nome completo: ");
+Usuario usuario = BuscarOuCriarUsuario(nomeCompleto, usuarios, SalvarUsuarios);
 
-Console.Write("Insira o nome completo: ");
-string nomeCompleto = Console.ReadLine()?.Trim();
-
-string Normalizar(string texto) =>
-    new string(texto.Normalize(System.Text.NormalizationForm.FormD)
-        .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
-        .ToArray())
-    .ToLowerInvariant()
-    .Trim();
-
-string nomeNormalizado = Normalizar(nomeCompleto);
-
-Usuario usuario = usuarios.FirstOrDefault(u => Normalizar(u.NomeCompleto) == nomeNormalizado);
-
-if (usuario == null)
-{
-    usuario = new Usuario(nomeCompleto);
-    usuarios.Add(usuario);
-    Console.WriteLine($"Usuário {usuario.NomeCompleto} criado!");
-    SalvarUsuarios(usuarios);
-}
-else
-{
-    Console.WriteLine($"Bem-vindo de volta, {usuario.NomeCompleto}!");
-}
-
-void SalvarUsuarios(List<Usuario> usuarios)
-{
-    var settings = new JsonSerializerSettings
-    {
-        Formatting = Formatting.Indented,
-        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-    };
-    string json = JsonConvert.SerializeObject(usuarios, settings);
-    File.WriteAllText(arquivoUsuarios, json);
-}
-
-while(true)
+while (true)
 {
     Console.WriteLine("\nEscolha uma opção do menu: ");
     Console.WriteLine("1 - Novo compromisso");
@@ -66,7 +23,7 @@ while(true)
     Console.WriteLine("3 - Sair");
     string opcao = Console.ReadLine();
 
-    switch(opcao)
+    switch (opcao)
     {
         case "1":
             RegistrarCompromisso(usuario, usuarios, SalvarUsuarios);
@@ -78,172 +35,189 @@ while(true)
             return;
         default:
             Console.WriteLine("Opção inválida. Insira uma opção válida.");
-            break; 
-            
+            break;
     }
+}
+
+static List<Usuario> CarregarUsuarios()
+{
+    if (File.Exists(arquivoUsuarios))
+    {
+        string json = File.ReadAllText(arquivoUsuarios);
+        return JsonConvert.DeserializeObject<List<Usuario>>(json) ?? new List<Usuario>();
+    }
+    return new List<Usuario>();
+}
+
+static void SalvarUsuarios(List<Usuario> usuarios)
+{
+    var settings = new JsonSerializerSettings
+    {
+        Formatting = Formatting.Indented,
+        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+    };
+    string json = JsonConvert.SerializeObject(usuarios, settings);
+    File.WriteAllText(arquivoUsuarios, json);
+}
+
+static string Normalizar(string texto) =>
+    new string(texto.Normalize(NormalizationForm.FormD)
+        .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+        .ToArray())
+    .ToLowerInvariant()
+    .Trim();
+
+static Usuario BuscarOuCriarUsuario(string nomeCompleto, List<Usuario> usuarios, Action<List<Usuario>> salvar)
+{
+    string nomeNormalizado = Normalizar(nomeCompleto);
+    Usuario usuario = usuarios.FirstOrDefault(u => Normalizar(u.NomeCompleto) == nomeNormalizado);
+
+    if (usuario == null)
+    {
+        usuario = new Usuario(nomeCompleto);
+        usuarios.Add(usuario);
+        Console.WriteLine($"Usuário {usuario.NomeCompleto} criado!");
+        salvar(usuarios);
+    }
+    else
+    {
+        Console.WriteLine($"Bem-vindo de volta, {usuario.NomeCompleto}!");
+    }
+    return usuario;
+}
+
+static string LerEntrada(string mensagem)
+{
+    Console.Write(mensagem);
+    return Console.ReadLine()?.Trim();
 }
 
 static void RegistrarCompromisso(Usuario usuario, List<Usuario> usuarios, Action<List<Usuario>> salvarUsuarios)
 {
-    DateTime? data = null;
-    TimeSpan? hora = null;
-    string descricao = null;
-    string nomeLocal = null;
-    int? capacidade = null; 
-
-    while(string.IsNullOrWhiteSpace(nomeLocal) || capacidade == null)
+    string nomeLocal = LerEntrada("Insira o nome do local: ");
+    int capacidade = LerInteiro("Insira a capacidade máxima do local: ");
+    Local local;
+    try
     {
-        Console.Write("Insira o nome do local: ");
-        nomeLocal = Console.ReadLine();
-
-        while(capacidade == null)
-        {
-            Console.Write("Insira a capacidade máxima do local: ");
-            var capacidadeInserida = Console.ReadLine();
-            try
-            {
-                capacidade = int.Parse(capacidadeInserida);
-            }
-            catch(FormatException)
-            {
-                Console.WriteLine($"{capacidadeInserida} não é um número válido. Insira um número válido.");
-            }
-        }
-        try
-        {
-            Local local = new(nomeLocal, capacidade.Value);
-        }
-        catch(ArgumentException excecao)
-        {
-            Console.WriteLine($"Erro ao criar local: {excecao.Message}");
-            nomeLocal = null;
-            capacidade = null;
-        }
+        local = new Local(nomeLocal, capacidade);
+    }
+    catch (ArgumentException ex)
+    {
+        Console.WriteLine($"Erro ao criar local: {ex.Message}");
+        return;
     }
 
-    while(data == null||hora == null||string.IsNullOrWhiteSpace(descricao))
+    DateTime dataHora = LerDataHora();
+    string descricao = LerEntrada("Insira uma descrição para o compromisso: ");
+
+    try
     {
-        while(data == null)
-        {
-            Console.Write("Digite a data do compromisso (dd/MM/aaaa): ");
-            var dataInserida = Console.ReadLine();
-            try
-            {
-                data = DateTime.ParseExact(dataInserida, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            }
-            catch(FormatException)
-            {
-                Console.WriteLine($"{dataInserida} não é uma data válida. Insira uma data válida.");
-            }
-        }
-        while(hora == null)
-        {
-            Console.Write("Insira a hora do compromisso (HH:mm): ");
-            var horaInserida = Console.ReadLine();
-            try
-            {
-                hora = TimeSpan.ParseExact(horaInserida, "hh\\:mm", CultureInfo.InvariantCulture);
-            }
-            catch(FormatException)
-            {
-                Console.WriteLine($"{horaInserida} não tem um formato válido. Insira um formato válido (HH:mm).");
-            }
-            catch(OverflowException)
-            {
-                Console.WriteLine($"{horaInserida} não é um horário válido. Insira um horário válido (00:00 - 23:59).");
-            }
-        }
-        
-        DateTime dataHora = data.Value.Add(hora.Value);
+        Compromisso compromisso = new(dataHora, descricao, usuario, local);
 
-        Console.Write("Insira uma descrição para o compromisso: ");
-        descricao = Console.ReadLine();
+        if (LerEntrada("Deseja inserir um participante? (s/n): ").ToLower() == "s")
+            AdicionarParticipantes(compromisso);
 
+        if (LerEntrada("Deseja inserir uma anotação? (s/n): ").ToLower() == "s")
+            AdicionarAnotacoes(compromisso);
+
+        usuario.AdicionarCompromisso(compromisso);
+        salvarUsuarios(usuarios);
+        Console.WriteLine("\nCompromisso registrado com sucesso.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erro no registro do compromisso: {ex.Message}");
+    }
+}
+
+static int LerInteiro(string mensagem)
+{
+    while (true)
+    {
+        Console.Write(mensagem);
+        if (int.TryParse(Console.ReadLine(), out int valor))
+            return valor;
+        Console.WriteLine("Valor inválido. Tente novamente.");
+    }
+}
+
+static DateTime LerDataHora()
+{
+    while (true)
+    {
         try
         {
-            Local local = new(nomeLocal, capacidade.Value);
-            Compromisso compromisso = new(dataHora, descricao, usuario, local);
+            string dataStr = LerEntrada("Digite a data do compromisso (dd/MM/aaaa): ");
+            DateTime data = DateTime.ParseExact(dataStr, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-            Console.Write("Deseja inserir um participante? (s/n): ");
-            if(Console.ReadLine()?.ToLower()=="s")
-            {
-                try
-                {
-                    while(true)
-                    {
-                        Console.WriteLine("Insira o nome do participante ou vazio para cancelar a inserção: ");
-                        string nomeParticipante = Console.ReadLine();
-                        if (string.IsNullOrWhiteSpace(nomeParticipante)) break;
+            string horaStr = LerEntrada("Insira a hora do compromisso (HH:mm): ");
+            TimeSpan hora = TimeSpan.ParseExact(horaStr, "hh\\:mm", CultureInfo.InvariantCulture);
 
-                        Participante participante = new(nomeParticipante);
-                        compromisso.AdicionarParticipante(participante);
-                    }
-                }
-                catch(Exception excecao)
-                {
-                    Console.WriteLine($"{excecao.Message}");
-                    Console.WriteLine($"Nenhum participante adicionado");
-                }
-            }
-            Console.Write("Deseja inserir uma anotação? (s/n): ");
-            if(Console.ReadLine()?.ToLower() == "s")
-            {
-                while(true)
-                {
-                    Console.Write("Insira um anotação ou vazio para cancelar a inserção: ");
-                    string anotaçãoInserida = Console.ReadLine();
-                    if(string.IsNullOrWhiteSpace(anotaçãoInserida)) break;
-                    compromisso.AdicionarAnotacao(anotaçãoInserida);
-                }
-            }
-
-            usuario.AdicionarCompromisso(compromisso);
-            salvarUsuarios(usuarios);
-            Console.WriteLine("\nCompromisso registrado com sucesso.");
+            return data.Add(hora);
         }
-        catch(Exception excecao)
+        catch
         {
-            Console.WriteLine($"Erro no registro do compromisso: {excecao.Message}");
-            data = null;
-            hora = null;
-            descricao = null;
+            Console.WriteLine("Data ou hora inválida. Tente novamente.");
         }
+    }
+}
 
+static void AdicionarParticipantes(Compromisso compromisso)
+{
+    while (true)
+    {
+        string nomeParticipante = LerEntrada("Insira o nome do participante ou vazio para cancelar a inserção: ");
+        if (string.IsNullOrWhiteSpace(nomeParticipante)) break;
+        try
+        {
+            Participante participante = new(nomeParticipante);
+            compromisso.AdicionarParticipante(participante);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro: {ex.Message}");
+        }
+    }
+}
+
+static void AdicionarAnotacoes(Compromisso compromisso)
+{
+    while (true)
+    {
+        string anotacao = LerEntrada("Insira uma anotação ou vazio para cancelar a inserção: ");
+        if (string.IsNullOrWhiteSpace(anotacao)) break;
+        compromisso.AdicionarAnotacao(anotacao);
     }
 }
 
 static void ListarCompromissos(Usuario usuario)
 {
     Console.WriteLine("\nCompromissos registrados: ");
-    if(usuario.Compromissos.Count == 0)
+    if (usuario.Compromissos.Count == 0)
     {
         Console.WriteLine("Não há compromissos registrados.");
         return;
     }
-    foreach(var compromisso in usuario.Compromissos)
+    foreach (var compromisso in usuario.Compromissos)
     {
         Console.WriteLine($"\n{compromisso}");
 
-        if(compromisso.Participantes.Count>0)
+        if (compromisso.Participantes.Count > 0)
         {
             Console.WriteLine("Participantes: ");
             foreach (var participante in compromisso.Participantes)
-            {
                 Console.WriteLine($"- {participante.NomeCompleto}");
-            }
         }
         else
         {
             Console.WriteLine("Não há participantes registrados.");
         }
 
-        if(compromisso.Anotacoes.Count>0)
+        if (compromisso.Anotacoes.Count > 0)
         {
             Console.WriteLine("Anotações: ");
             foreach (var anotacao in compromisso.Anotacoes)
-            {
                 Console.WriteLine($"- {anotacao.Texto}");
-            }
         }
         else
         {
